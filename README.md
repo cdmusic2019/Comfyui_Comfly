@@ -27,6 +27,11 @@
 
 # 更新 Update：
 
+20260610:
+
+chatgpt:节点: Comfly_gpt_image_2_official节点新增gpt-image-2-4K, gpt-image-2-2K模型
+
+
 20260422:
 
 chatgpt:节点: 新增Comfly_gpt_image_2_official节点，官方api节点，支持更多尺寸和参数选择
