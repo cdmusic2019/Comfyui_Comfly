@@ -1909,7 +1909,7 @@ class Comfly_gpt_image_2_official:
 
     _RESOLUTION_CHOICES = ["1k", "2k", "4k"]
     
-    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2-4K", "gpt-image-2-2K"]
+    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2-vip", "gpt-image-2-4K", "gpt-image-2-2K"]
 
     _SIZE_MAP = {
         # 1:1
@@ -1978,7 +1978,6 @@ class Comfly_gpt_image_2_official:
         ("1:2", "4k"): "1920x3840",
     }
 
-    # 4K模型专用尺寸映射（只根据aspect_ratio，使用4k分辨率）
     _SIZE_MAP_4K = {
         "1:1": "2880x2880",
         "16:9": "3840x2160",
@@ -1995,7 +1994,6 @@ class Comfly_gpt_image_2_official:
         "1:2": "1920x3840",
     }
 
-    # 2K模型专用尺寸映射（只根据aspect_ratio，使用2k分辨率）
     _SIZE_MAP_2K = {
         "1:1": "2048x2048",
         "16:9": "2560x1440",
@@ -2230,23 +2228,17 @@ class Comfly_gpt_image_2_official:
             mask_byte_arr.seek(0)
             files["mask"] = ("mask.png", mask_byte_arr, "image/png")
 
-        # 直接使用传入的 model 名称
         data = {
             "prompt": prompt,
-            "model": model,  # 直接使用: gpt-image-2, gpt-image-2-4K, 或 gpt-image-2-2K
+            "model": model, 
             "n": str(n),
             "quality": quality,
             "moderation": moderation,
         }
-        
-        # 对于 4K 和 2K 模型，只传 aspect_ratio，不传 size
+
         if model in ["gpt-image-2-4K", "gpt-image-2-2K"]:
-            # 从 size 反推 aspect_ratio（因为 size 是根据 aspect_ratio 计算的）
-            # 这里 size 参数实际上已经不需要传给 API 了
-            # 我们需要传 aspect_ratio
-            pass  # aspect_ratio 会在外部处理
+            pass  
         else:
-            # 标准 gpt-image-2 模型，传 size
             data["size"] = size
             
         if background != "auto":
@@ -2275,7 +2267,6 @@ class Comfly_gpt_image_2_official:
         self, prompt, image1, image2, image3, image4, image5, mask, n, quality, aspect_ratio, background,
         output_format, output_compression, moderation, model
     ):
-        """专门为 4K/2K 模型构建请求，使用 aspect_ratio 而不是 size"""
 
         input_images = []
         for img in [image1, image2, image3, image4, image5]:
@@ -2328,14 +2319,13 @@ class Comfly_gpt_image_2_official:
             mask_byte_arr.seek(0)
             files["mask"] = ("mask.png", mask_byte_arr, "image/png")
 
-        # 4K/2K 模型：使用 aspect_ratio，不传 size
         data = {
             "prompt": prompt,
-            "model": model,  # gpt-image-2-4K 或 gpt-image-2-2K
+            "model": model, 
             "n": str(n),
             "quality": quality,
             "moderation": moderation,
-            "aspect_ratio": aspect_ratio,  # 只传 aspect_ratio
+            "aspect_ratio": aspect_ratio, 
         }
             
         if background != "auto":
@@ -2412,7 +2402,7 @@ class Comfly_gpt_image_2_official:
         initial_timeout,
         model,
     ):
-        # 根据模型类型选择不同的构建方法
+
         if model in ["gpt-image-2-4K", "gpt-image-2-2K"]:
             data, request_files = self._build_official_edits_multipart_with_aspect_ratio(
                 prompt, image1, image2, image3, image4, image5, mask, n, quality, aspect_ratio, background,
@@ -2537,7 +2527,6 @@ class Comfly_gpt_image_2_official:
         self, prompt, image1, image2, image3, image4, image5, mask, n, quality, size, aspect_ratio, background,
         output_format, output_compression, moderation, max_retries, initial_timeout, pbar, model
     ):
-        # 根据模型类型选择不同的构建方法
         if model in ["gpt-image-2-4K", "gpt-image-2-2K"]:
             data, request_files = self._build_official_edits_multipart_with_aspect_ratio(
                 prompt, image1, image2, image3, image4, image5, mask, n, quality, aspect_ratio, background,
@@ -2582,22 +2571,18 @@ class Comfly_gpt_image_2_official:
             print(msg)
             return (blank_t, "", msg)
 
-        # 根据模型类型获取 size 和 resolution_info
         if model == "gpt-image-2-4K":
-            # 4K 模型：只用 aspect_ratio，自动选择 4K 尺寸
             size, error_msg = self._get_size_for_4k_model(aspect_ratio)
             resolution_info = "4K (自动根据 aspect_ratio)"
             print(f"Using gpt-image-2-4K model with aspect_ratio={aspect_ratio}, expected size={size}")
         elif model == "gpt-image-2-2K":
-            # 2K 模型：只用 aspect_ratio，自动选择 2K 尺寸
             size, error_msg = self._get_size_for_2k_model(aspect_ratio)
             resolution_info = "2K (自动根据 aspect_ratio)"
             print(f"Using gpt-image-2-2K model with aspect_ratio={aspect_ratio}, expected size={size}")
         else:
-            # 标准 gpt-image-2 模型：使用 aspect_ratio + resolution
             size, error_msg = self._get_size_from_params(aspect_ratio, resolution)
             resolution_info = resolution
-            print(f"Using gpt-image-2 model with aspect_ratio={aspect_ratio}, resolution={resolution}, size={size}")
+            print(f"Using {model} model with aspect_ratio={aspect_ratio}, resolution={resolution}, size={size}")
 
         if error_msg:
             print(error_msg)
@@ -2630,7 +2615,6 @@ class Comfly_gpt_image_2_official:
             return s
 
         try:
-            # 对于 4K/2K 模型，跳过 size 验证（因为 API 会自动处理）
             if model not in ["gpt-image-2-4K", "gpt-image-2-2K"]:
                 ok, err_msg = self._validate_gpt_image2_size(size)
                 if not ok:
