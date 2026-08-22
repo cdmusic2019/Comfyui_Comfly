@@ -235,7 +235,7 @@ class Comfly_nano_banana:
         return {
             "required": {
                 "text": ("STRING", {"multiline": True}),
-                "model": (["nano-banana-2","gemini-3-pro-image-preview", "gemini-2.5-flash-image", "nano-banana", "nano-banana-hd", "gemini-2.5-flash-image-preview"], {"default": "nano-banana"}),
+                "model": (["nano-banana-pro","gemini-3-pro-image-preview", "gemini-2.5-flash-image", "nano-banana", "nano-banana-hd", "gemini-2.5-flash-image-preview"], {"default": "nano-banana"}),
             },
             "optional": {
                 "image1": ("IMAGE",),
@@ -733,7 +733,7 @@ class Comfly_nano_banana2_edit:
             "required": {
                 "prompt": ("STRING", {"multiline": True}),
                 "mode": (["text2img", "img2img"], {"default": "text2img"}),
-                "model": (["gemini-3.1-flash-image-preview", "nano-banana-2", "nano-banana-2-2k", "nano-banana-2-4k"], {"default": "nano-banana-2"}),
+                "model": (["gemini-3.1-flash-image-preview", "nano-banana-pro", "nano-banana-pro-2k", "nano-banana-pro-4k"], {"default": "nano-banana-pro"}),
                 "aspect_ratio": (["auto", "16:9", "4:3", "4:5", "3:2", "1:1", "2:3", "3:4", "5:4", "9:16", "21:9", "1:4", "4:1", "1:8", "8:1"], {"default": "auto"}),
                 "image_size": (["1K", "2K", "4K"], {"default": "2K"}),
             },
@@ -794,7 +794,7 @@ class Comfly_nano_banana2_edit:
         except Exception as e:
             return None, url, str(e)
     
-    def generate_image(self, prompt, mode="text2img", model="nano-banana-2", aspect_ratio="auto", 
+    def generate_image(self, prompt, mode="text2img", model="nano-banana-pro", aspect_ratio="auto", 
                       image_size="2K", image1=None, image2=None, image3=None, image4=None,
                       image5=None, image6=None, image7=None, image8=None, image9=None, 
                       image10=None, image11=None, image12=None, image13=None, image14=None,
@@ -839,7 +839,7 @@ class Comfly_nano_banana2_edit:
                     "aspect_ratio": aspect_ratio
                 }
 
-                if model in ["nano-banana-2", "gemini-3.1-flash-image-preview"]:
+                if model in ["nano-banana-pro", "gemini-3.1-flash-image-preview"]:
                     payload["image_size"] = image_size
                     
                 if response_format:
@@ -879,7 +879,7 @@ class Comfly_nano_banana2_edit:
                     "aspect_ratio": aspect_ratio
                 }
 
-                if model in ["nano-banana-2", "gemini-3.1-flash-image-preview"]:
+                if model in ["nano-banana-pro", "gemini-3.1-flash-image-preview"]:
                     data["image_size"] = image_size
                 
                 if response_format:
@@ -962,7 +962,7 @@ class Comfly_nano_banana2_edit:
                         
                         response_info = f"Generated {len(image_list)} images using {model}\n"
 
-                        if model in ["nano-banana-2", "gemini-3.1-flash-image-preview"]:
+                        if model in ["nano-banana-pro", "gemini-3.1-flash-image-preview"]:
                             response_info += f"Image size: {image_size}\n"
                         
                         response_info += f"Aspect ratio: {aspect_ratio}\n"
