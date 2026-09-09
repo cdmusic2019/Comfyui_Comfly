@@ -746,7 +746,7 @@ class ComflyChatGPTApi:
            image_download_timeout=100, api_key=""):
 
         if model.lower() == "gpt-image-1":
-            error_message = "不支持此模型，请使用 gpt-4o-image，gpt-4o-image-vip，sora_image，sora_image-vip 这4个模型。"
+            error_message = "不支持此模型，请使用 列表中的模型。"
             print(error_message)
 
             if images is not None:
@@ -1909,7 +1909,7 @@ class Comfly_gpt_image_2_official:
 
     _RESOLUTION_CHOICES = ["1k", "2k", "4k"]
     
-    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2-vip", "gpt-image-2-4K", "gpt-image-2-2K"]
+    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2.5-flare-2k", "gpt-image-2.5-flare-4k", "gpt-image-2.5-flare"]
 
     _SIZE_MAP = {
         # 1:1
