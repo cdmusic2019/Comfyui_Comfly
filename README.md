@@ -9,7 +9,8 @@
 </div>
 
 
-
+这是一个 forks，在原作者comfly的项目上做的小量修改。
+。。。。。。
 我喜欢comfyui，它就像风一样的自由，所以我取名为：comfly
 同样我也喜欢绘画和设计，所以我非常佩服每一位画家，艺术家，在ai的时代，我希望自己能接收ai知识的同时，也要记住尊重关于每个画师的版权问题。
 我一直认为ai最好的方式应该是在购买版权的前提下，有序的完成ai的良性发展. 在学习comfyui的这段旅程中，我遇到了，几位可爱的小伙伴。
@@ -26,6 +27,10 @@
 > 目前界面没有做太多的美化，有时间再说，必要性不到，主要是功能性插件
 
 # 更新 Update：
+2026.9.10：
+
+在Comfly_gpt_image_2_official节点删除了gpt-image-2-4K, gpt-image-2-2K模型，增加了gpt-image-2.5-flare，gpt-image-2.5-sunburst模型
+并增加了节点：Comfly_Doubao_Seedream_4_5，支持seedream 4.5和 seedream 5.0
 
 20260610:
 
