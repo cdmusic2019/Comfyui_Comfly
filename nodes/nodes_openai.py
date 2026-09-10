@@ -1909,7 +1909,7 @@ class Comfly_gpt_image_2_official:
 
     _RESOLUTION_CHOICES = ["1k", "2k", "4k"]
     
-    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2.5-flare-2k", "gpt-image-2.5-flare-4k", "gpt-image-2.5-flare"]
+    _MODEL_CHOICES = ["gpt-image-2", "gpt-image-2.5-flare", "gpt-image-2.5-flare-2k", "gpt-image-2.5-flare-4k", "gpt-image-2.5-sunburst-2k", "gpt-image-2.5-sunburst", "gpt-image-2.5-sunburst-4k"]
 
     _SIZE_MAP = {
         # 1:1
